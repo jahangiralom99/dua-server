@@ -47,7 +47,7 @@ app.get("/dua", (req, res) => {
 app.get("/duas", (req, res) => {
   const catId = req.query.cat_id;
   console.log(catId);
-  db.all("SELECT * FROM WHERE cat_id = ?", [catId], (err, rows) => {
+  db.all("SELECT * FROM dua WHERE cat_id = ?", [catId], (err, rows) => {
     if (err) {
           console.error(err.message);
           res.status(500).json({ error: "Internal Server Error" });
