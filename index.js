@@ -46,21 +46,34 @@ app.get("/dua", (req, res) => {
 // get query data by cat_id
 app.get("/duas", (req, res) => {
   const catId = req.query.cat_id;
-  console.log(catId);
   db.all("SELECT * FROM dua WHERE cat_id = ?", [catId], (err, rows) => {
     if (err) {
-          console.error(err.message);
-          res.status(500).json({ error: "Internal Server Error" });
-          return;
-        }res.json(rows);
-  })
+      console.error(err.message);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    res.json(rows);
+  });
 });
-
 
 // sub Categories
 app.get("/sub_category", (req, res) => {
   const sql = "SELECT * FROM sub_category";
   db.all(sql, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    res.json(rows);
+  });
+});
+
+// sub Categories
+app.get("/sub_category/:id", (req, res) => {
+  const categoryId = req.params.id;
+  console.log(categoryId);
+  const sql ="SELECT * FROM sub_category WHERE subcat_id = ? ";
+  db.all(sql, [categoryId], (err, rows) => {
     if (err) {
       console.error(err.message);
       return res.status(500).json({ error: "Internal Server Error" });
